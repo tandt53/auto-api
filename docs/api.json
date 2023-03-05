@@ -1,0 +1,49 @@
+{
+  "info": {
+    "title": "index.js",
+    "description": "description",
+    "version": "1.0.0",
+    "apis": [
+      {
+        "path": "/v3/auth/otp/verify",
+        "method": "POST",
+        "description": "Verify OTP",
+        "request": {
+          "headers": [
+            {
+              "Content-Type": "application/json"
+            }
+          ],
+          "body": [
+            {
+              "key": "otpCode",
+              "value": "000000"
+            },
+            {
+              "key": "phone",
+              "value": "012345678901"
+            }
+          ]
+        },
+        "response": {
+          "code": 200,
+          "message": "OK",
+          "body": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU5ZjQyZjQ2ZjQxZjQwMDAxMjQxZjQwZiIsImlhd"
+            }
+          ],
+          "extract": [
+            {
+              "in": "body",
+              "key": "tokenJsonPath",
+              "value": "tokenValue",
+              "variable": "token"
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

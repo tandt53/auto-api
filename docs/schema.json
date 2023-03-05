@@ -1,0 +1,187 @@
+{
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "definitions": {
+    "Info": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        },
+        "apis": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/API"
+          }
+        }
+      },
+      "required": [
+        "apis",
+        "title"
+      ],
+      "title": "Info"
+    },
+    "API": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "method": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "request": {
+          "$ref": "#/definitions/Request"
+        },
+        "response": {
+          "$ref": "#/definitions/Response"
+        }
+      },
+      "required": [
+        "method",
+        "path",
+        "request",
+        "response"
+      ],
+      "title": "API"
+    },
+    "Request": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "headers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Header"
+          }
+        },
+        "parameters": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Body"
+          }
+        },
+        "body": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Body"
+          }
+        }
+      },
+      "required": [
+        "body",
+        "headers"
+      ],
+      "title": "Request"
+    },
+    "Body": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "key": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "key",
+        "value"
+      ],
+      "title": "Body"
+    },
+    "Header": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "Content-Type": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "Content-Type"
+      ],
+      "title": "Header"
+    },
+    "Parameter": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "Content-Type": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "Content-Type"
+      ],
+      "title": "Parameter"
+    },
+    "Response": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "code": {
+          "type": "integer"
+        },
+        "message": {
+          "type": "string"
+        },
+        "body": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Body"
+          }
+        },
+        "extract": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Extract"
+          }
+        }
+      },
+      "required": [
+        "body",
+        "code",
+        "extract",
+        "message"
+      ],
+      "title": "Response"
+    },
+    "Extract": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "in": {
+          "type": "string"
+        },
+        "key": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        },
+        "variable": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "in",
+        "key",
+        "value",
+        "variable"
+      ],
+      "title": "Extract"
+    }
+  }
+}

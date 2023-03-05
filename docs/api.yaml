@@ -1,0 +1,48 @@
+---
+info:
+  title: Authentication Verify OTP
+  description: description
+  version: 1.0.0
+  variables:
+    - key: phone
+      value: ''
+    - key: token
+      value: ''
+    - key: otpCode
+      value: ''
+    - key: tokenJsonPath
+      value: '${random()}'
+  apis:
+    - path: /auth/otp/verify
+      method: POST
+      url: https://api.example.com/v3
+      description: Verify OTP
+      request:
+        cookies:
+        headers:
+          - Content-Type: application/json
+        query:
+          - key: phone
+            value: '${phone}'
+        formData:
+          - key: otpCode
+            value: '${otpCode}'
+        path:
+          - key: phone
+            value: '${phone}'
+        body:
+          - key: otpCode
+            value: '000000'
+          - key: phone
+            value: '012345678901'
+      response:
+        code: 200
+        message: OK
+        body:
+          - key: token
+            value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU5ZjQyZjQ2ZjQxZjQwMDAxMjQxZjQwZiIsImlhd
+        extract:
+          - in: body
+            key: tokenJsonPath
+            value: tokenValue
+            variable: token

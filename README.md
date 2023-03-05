@@ -17,7 +17,9 @@ How it works
     - Run test suites
     - Generate report
 
-
+*** built-in function:
+- random -> faker
+- comparison -> chai
 
 
 
