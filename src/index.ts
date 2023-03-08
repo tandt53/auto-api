@@ -1,16 +1,30 @@
-#! /usr/bin/env node
-const { Command } = require("commander"); // add this line
-const figlet = require("figlet");
 
-const program = new Command();
-console.log(figlet.textSync("API Testing"));
+import {getApiSpec} from "./parser/parser";
+import {getTestSpec} from "./tests/testDesign";
+import {buildTestSuite} from "./tests/suite";
 
-program
-    .version("1.0.0")
-    .description("An example CLI for managing a directory")
-    .option("-l, --ls  [value]", "List directory contents")
-    .option("-m, --mkdir <value>", "Create a directory")
-    .option("-t, --touch <value>", "Create a file")
-    .parse(process.argv);
+const swaggerJson = "openapi.json";
+const testJson = "api-test.json";
 
-const options = program.opts();
+const allWorks = async () => {
+    // get all arguments and setup configuration
+
+    // parse the API specification
+    const apiSpecs = await getApiSpec(swaggerJson);
+    console.log(apiSpecs);
+
+    // parse the API test design
+    const testSpecs = await getTestSpec(testJson);
+    console.log(testSpecs);
+
+    // build the whole test suite
+    // sometimes need to load hooks: setup and teardown suite/test/request
+    const testSuite = await buildTestSuite(apiSpecs, testSpecs);
+
+    // execute test suite
+
+    // generate report
+
+}
+
+allWorks();
