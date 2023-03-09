@@ -13,6 +13,7 @@ describe("getApiSpec", () => {
 
     it("should return an array of Api", async () => {
         const apis = await getApiSpec("openapi.json");
+        console.log(JSON.stringify(apis, null, 2));
         expect(apis).to.be.instanceof(Array);
         expect(apis[0]).to.be.instanceof(Object);
         expect(apis[0]).to.have.property("path");

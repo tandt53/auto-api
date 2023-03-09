@@ -1,29 +1,50 @@
-
 import {getApiSpec} from "./parser/parser";
 import {getTestSpec} from "./tests/testDesign";
 import {buildTestSuite} from "./tests/suite";
+import {Api} from "./parser/api";
+import {OpenAPIV3} from "openapi-types";
 
 const swaggerJson = "openapi.json";
 const testJson = "api-test.json";
 
 const allWorks = async () => {
-    // get all arguments and setup configuration
+    const apis: Api[] = await getApiSpec(swaggerJson);
+    const api = apis[0];
+    // parse all the properties of api
+    const path = api.path;
+    const method = api.method;
+    const operationId = api.operationId;
+    const requestBody = api.requestBody;
+    const parameters = api.parameters;
+    const responses = api.responses;
+    const security = api.security;
+    const description = api.description;
+    const summary = api.summary;
+    const tags = api.tags;
+    const deprecated = api.deprecated;
+    const servers = api.servers;
 
-    // parse the API specification
-    const apiSpecs = await getApiSpec(swaggerJson);
-    console.log(apiSpecs);
+    // parse the request body
+    if (requestBody) {
+        parseRequestBody(requestBody);
+    }
 
-    // parse the API test design
-    const testSpecs = await getTestSpec(testJson);
-    console.log(testSpecs);
+}
 
-    // build the whole test suite
-    // sometimes need to load hooks: setup and teardown suite/test/request
-    const testSuite = await buildTestSuite(apiSpecs, testSpecs);
+function parseRequestBody(body: OpenAPIV3.RequestBodyObject) {
+    // parse the body
+    const description = body.description;
+    const required = body.required;
+    const content = body.content;
+    // parse all content
+    for (const key in content) {
+        const mediaType = content[key];
+        const schema = mediaType.schema;
+        const examples = mediaType.examples;
+        const example = mediaType.example;
+        const encoding = mediaType.encoding;
 
-    // execute test suite
-
-    // generate report
+    }
 
 }
 
