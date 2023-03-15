@@ -5,7 +5,7 @@
     "version": "1.0.0",
     "apis": [
       {
-        "path": "/v3/auth/otp/verify",
+        "path": "/auth/otp/verify",
         "method": "POST",
         "description": "Verify OTP",
         "request": {

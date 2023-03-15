@@ -1,5 +1,11 @@
 import {OpenAPIV3} from "openapi-types";
 
+/**
+ * this object will be used to
+ * - forming the UI like postman
+ * - generate data for test cases
+ * - create a request object for axios
+ */
 export interface Api {
     path: string;
     method: string;

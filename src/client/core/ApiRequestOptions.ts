@@ -2,15 +2,17 @@
 /* tslint:disable */
 /* eslint-disable */
 export type ApiRequestOptions = {
-    readonly method: 'GET' | 'PUT' | 'POST' | 'DELETE' | 'OPTIONS' | 'HEAD' | 'PATCH';
-    readonly url: string;
-    readonly path?: Record<string, any>;
-    readonly cookies?: Record<string, any>;
-    readonly headers?: Record<string, any>;
-    readonly query?: Record<string, any>;
-    readonly formData?: Record<string, any>;
-    readonly body?: any;
-    readonly mediaType?: string;
-    readonly responseHeader?: string;
-    readonly errors?: Record<number, string>;
+    // method: 'GET' | 'PUT' | 'POST' | 'DELETE' | 'OPTIONS' | 'HEAD' | 'PATCH'; // temporary comment out
+    method: string;
+    url: string;
+    operationId?: string;
+    path?: Record<string, any>;
+    cookies?: Record<string, any>;
+    headers?: Record<string, any>;
+    query?: Record<string, any>;
+    formData?: Record<string, any>;
+    body?: any;
+    mediaType?: string;
+    responseHeader?: string;
+    errors?: Record<number, string>;
 };

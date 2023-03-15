@@ -1,4 +1,5 @@
-import OpenAPIParser from "@readme/openapi-parser";
+// import OpenAPIParser from "@readme/openapi-parser";
+import OpenAPIParser from "@apidevtools/swagger-parser";
 import {Api} from "./api";
 
 export const getApiSpec = async (swaggerJson: string): Promise<any> => {
@@ -12,6 +13,7 @@ export const getApiSpec = async (swaggerJson: string): Promise<any> => {
             const pathItem = doc.paths[path];
             for (const method in pathItem) {
                 if (pathItem.hasOwnProperty(method)) {
+
                     const operation = pathItem[method];
                     const endpoint: Api = {
                         path,

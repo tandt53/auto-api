@@ -1,0 +1,5 @@
+{
+  "name": "node-uuid",
+  "description": "RFC4122 (v1 and v4) UUIDs",
+  "version": "1.4.2"
+}
