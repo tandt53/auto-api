@@ -1,7 +1,5 @@
 # auto-api
 
-[![Build Status](https://travis-ci.org/kevgo/auto-api.svg?branch=master)](https://travis-ci.org/kevgo/auto-api)
-
 This tool will automatically test based on the API of your application.
 How it works
 - Input processing
