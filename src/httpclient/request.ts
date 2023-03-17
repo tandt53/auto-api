@@ -1,15 +1,15 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
+import axios, {AxiosError, AxiosRequestConfig, AxiosResponse} from 'axios';
 import FormData from 'form-data';
 
-import { ApiError } from './ApiError';
-import type { ApiRequestOptions } from './ApiRequestOptions';
-import type { ApiResult } from './ApiResult';
-import { CancelablePromise } from './CancelablePromise';
-import type { OnCancel } from './CancelablePromise';
-import type { OpenAPIConfig } from './OpenAPI';
+import {ApiError} from './ApiError';
+import type {ApiRequestOptions} from './ApiRequestOptions';
+import type {ApiResult} from './ApiResult';
+import {CancelablePromise} from './CancelablePromise';
+import type {OnCancel} from './CancelablePromise';
+import type {OpenAPIConfig} from './OpenAPI';
 
 const isDefined = <T>(value: T | null | undefined): value is Exclude<T, null | undefined> => {
     return value !== undefined && value !== null;
@@ -151,11 +151,11 @@ const getHeaders = async (config: OpenAPIConfig, options: ApiRequestOptions, for
         ...options.headers,
         ...formHeaders,
     })
-    .filter(([_, value]) => isDefined(value))
-    .reduce((headers, [key, value]) => ({
-        ...headers,
-        [key]: String(value),
-    }), {} as Record<string, string>);
+        .filter(([_, value]) => isDefined(value))
+        .reduce((headers, [key, value]) => ({
+            ...headers,
+            [key]: String(value),
+        }), {} as Record<string, string>);
 
     if (isStringWithValue(token)) {
         headers['Authorization'] = `Bearer ${token}`;
@@ -193,7 +193,7 @@ const sendRequest = async <T>(
         data: body ?? formData,
         method: options.method,
         withCredentials: config.WITH_CREDENTIALS,
-        cancelToken: source.token,
+        cancelToken: source.token
     };
 
     onCancel(() => source.cancel('The user aborted a request.'));
@@ -201,7 +201,7 @@ const sendRequest = async <T>(
     try {
         return await axios.request(requestConfig);
     } catch (error) {
-        const axiosError = error as AxiosError;
+        const axiosError = error as AxiosError<T>;
         if (axiosError.response) {
             return axiosError.response;
         }
@@ -255,7 +255,7 @@ const catchErrorCodes = (options: ApiRequestOptions, result: ApiResult): void =>
  * @returns CancelablePromise<T>
  * @throws ApiError
  */
-export const request = <T>(config: OpenAPIConfig, options: ApiRequestOptions): CancelablePromise<T> => {
+export const request = (config: OpenAPIConfig, options: ApiRequestOptions): CancelablePromise<ApiResult> => {
     return new CancelablePromise(async (resolve, reject, onCancel) => {
         try {
             const url = getUrl(config, options);
@@ -264,21 +264,19 @@ export const request = <T>(config: OpenAPIConfig, options: ApiRequestOptions): C
             const headers = await getHeaders(config, options, formData);
 
             if (!onCancel.isCancelled) {
-                const response = await sendRequest<T>(config, options, url, body, formData, headers, onCancel);
-                const responseBody = getResponseBody(response);
-                const responseHeader = getResponseHeader(response, options.responseHeader);
+                const response = await sendRequest<ApiResult>(config, options, url, body, formData, headers, onCancel);
+                const responseHeader: Record<string, any> = Object.fromEntries(response.headers.entries());
 
                 const result: ApiResult = {
                     url,
                     ok: isSuccess(response.status),
                     status: response.status,
                     statusText: response.statusText,
-                    body: responseHeader ?? responseBody,
+                    headers: responseHeader,
+                    body: response.data,
                 };
 
-                catchErrorCodes(options, result);
-
-                resolve(result.body);
+                resolve(result);
             }
         } catch (error) {
             reject(error);

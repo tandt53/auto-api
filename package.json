@@ -8,7 +8,7 @@
     "start": "node ./dist/index.js",
     "debug": "ts-node ./src/index.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "generate-client": "openapi --input ./swagger-petstore.json --output ./src/client --client axios"
+    "generate-client": "openapi --input ./openapi.json --output src/httpclient --client axios"
   },
   "repository": {
     "type": "git",
@@ -35,9 +35,10 @@
     "commander": "^10.0.0",
     "figlet": "^1.5.2",
     "inquirer": "^9.1.4",
-    "openapi-types": "^12.1.0",
     "json-schema-to-typescript": "^12.0.0",
-    "json-schema-faker": "^0.5.0-rcv.46"
+    "json-schema-faker": "^0.5.0-rcv.46",
+    "json-schema": "^0.4.0",
+    "openapi-types": "^12.1.0"
   },
   "devDependencies": {
     "@types/chai": "^4.3.4",
@@ -47,7 +48,6 @@
     "chai": "^4.3.7",
     "form-data": "^4.0.0",
     "mocha": "^10.2.0",
-    "openapi": "^2.0.0-14",
     "openapi-typescript-codegen": "^0.20.1",
     "ts-node": "^10.9.1",
     "typescript": "^4.9.5"

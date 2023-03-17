@@ -19,8 +19,8 @@ export type OpenAPIConfig = {
 };
 
 export const OpenAPI: OpenAPIConfig = {
-    BASE: 'https://petstore.swagger.io/v2',
-    VERSION: '1.0.6',
+    BASE: '/api/v3',
+    VERSION: '1.0.17',
     WITH_CREDENTIALS: false,
     CREDENTIALS: 'include',
     TOKEN: undefined,

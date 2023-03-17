@@ -5,43 +5,47 @@
     "version": "1.0.0",
     "apis": [
       {
-        "path": "/auth/otp/verify",
-        "method": "POST",
+        "path": "/pet",
+        "method": "PUT",
         "description": "Verify OTP",
         "request": {
-          "headers": [
-            {
-              "Content-Type": "application/json"
-            }
-          ],
-          "body": [
-            {
-              "key": "otpCode",
-              "value": "000000"
+          "headers": [],
+          "body": {
+            "id": "",
+            "name": "",
+            "category": {
+              "id": "",
+              "name": ""
             },
-            {
-              "key": "phone",
-              "value": "012345678901"
-            }
-          ]
-        },
-        "response": {
-          "code": 200,
-          "message": "OK",
-          "body": [
-            {
-              "key": "token",
-              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU5ZjQyZjQ2ZjQxZjQwMDAxMjQxZjQwZiIsImlhd"
-            }
-          ],
-          "extract": [
-            {
-              "in": "body",
-              "key": "tokenJsonPath",
-              "value": "tokenValue",
-              "variable": "token"
-            }
-          ]
+            "photoUrls": [
+              ""
+            ],
+            "tags": [
+              {
+                "id": "",
+                "name": ""
+              }
+            ],
+            "status": ""
+          },
+          "response": {
+            "code": 200,
+            "message": "OK",
+            "body": [
+              {
+                "key": "token",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU5ZjQyZjQ2ZjQxZjQwMDAxMjQxZjQwZiIsImlhd"
+              }
+            ],
+            "extract": [
+              {
+                "in": "body",
+                "key": "tokenJsonPath",
+                "value": "tokenValue",
+                "variable": "token"
+              }
+            ]
+          }
         }
       }
     ]

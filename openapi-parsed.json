@@ -1,0 +1,228 @@
+[
+  {
+    "method": "PUT",
+    "url": "/pet",
+    "operationId": "updatePet",
+    "body": {
+      "id": "",
+      "name": "",
+      "category": {
+        "id": "",
+        "name": ""
+      },
+      "photoUrls": [
+        ""
+      ],
+      "tags": [
+        {
+          "id": "",
+          "name": ""
+        }
+      ],
+      "status": ""
+    },
+    "mediaType": "application/json"
+  },
+  {
+    "method": "POST",
+    "url": "/pet",
+    "operationId": "addPet",
+    "body": {
+      "id": "",
+      "name": "",
+      "category": {
+        "id": "",
+        "name": ""
+      },
+      "photoUrls": [
+        ""
+      ],
+      "tags": [
+        {
+          "id": "",
+          "name": ""
+        }
+      ],
+      "status": ""
+    },
+    "mediaType": "application/json"
+  },
+  {
+    "method": "GET",
+    "url": "/pet/findByStatus",
+    "operationId": "findPetsByStatus",
+    "query": {
+      "status": ""
+    }
+  },
+  {
+    "method": "GET",
+    "url": "/pet/findByTags",
+    "operationId": "findPetsByTags",
+    "query": {
+      "tags": ""
+    }
+  },
+  {
+    "method": "GET",
+    "url": "/pet/{petId}",
+    "operationId": "getPetById",
+    "path": {
+      "petId": "{petId}"
+    }
+  },
+  {
+    "method": "POST",
+    "url": "/pet/{petId}",
+    "operationId": "updatePetWithForm",
+    "path": {
+      "petId": "{petId}"
+    },
+    "query": {
+      "name": "",
+      "status": ""
+    }
+  },
+  {
+    "method": "DELETE",
+    "url": "/pet/{petId}",
+    "operationId": "deletePet",
+    "headers": {
+      "api_key": ""
+    },
+    "path": {
+      "petId": "{petId}"
+    }
+  },
+  {
+    "method": "POST",
+    "url": "/pet/{petId}/uploadImage",
+    "operationId": "uploadFile",
+    "path": {
+      "petId": "{petId}"
+    },
+    "query": {
+      "additionalMetadata": ""
+    },
+    "body": "",
+    "mediaType": "application/octet-stream"
+  },
+  {
+    "method": "GET",
+    "url": "/store/inventory",
+    "operationId": "getInventory"
+  },
+  {
+    "method": "POST",
+    "url": "/store/order",
+    "operationId": "placeOrder",
+    "body": {
+      "id": "",
+      "petId": "",
+      "quantity": "",
+      "shipDate": "",
+      "status": "",
+      "complete": ""
+    },
+    "mediaType": "application/json"
+  },
+  {
+    "method": "GET",
+    "url": "/store/order/{orderId}",
+    "operationId": "getOrderById",
+    "path": {
+      "orderId": "{orderId}"
+    }
+  },
+  {
+    "method": "DELETE",
+    "url": "/store/order/{orderId}",
+    "operationId": "deleteOrder",
+    "path": {
+      "orderId": "{orderId}"
+    }
+  },
+  {
+    "method": "POST",
+    "url": "/user",
+    "operationId": "createUser",
+    "body": {
+      "id": "",
+      "username": "",
+      "firstName": "",
+      "lastName": "",
+      "email": "",
+      "password": "",
+      "phone": "",
+      "userStatus": ""
+    },
+    "mediaType": "application/json"
+  },
+  {
+    "method": "POST",
+    "url": "/user/createWithList",
+    "operationId": "createUsersWithListInput",
+    "body": [
+      {
+        "id": "",
+        "username": "",
+        "firstName": "",
+        "lastName": "",
+        "email": "",
+        "password": "",
+        "phone": "",
+        "userStatus": ""
+      }
+    ],
+    "mediaType": "application/json"
+  },
+  {
+    "method": "GET",
+    "url": "/user/login",
+    "operationId": "loginUser",
+    "query": {
+      "username": "",
+      "password": ""
+    }
+  },
+  {
+    "method": "GET",
+    "url": "/user/logout",
+    "operationId": "logoutUser"
+  },
+  {
+    "method": "GET",
+    "url": "/user/{username}",
+    "operationId": "getUserByName",
+    "path": {
+      "username": "{username}"
+    }
+  },
+  {
+    "method": "PUT",
+    "url": "/user/{username}",
+    "operationId": "updateUser",
+    "path": {
+      "username": "{username}"
+    },
+    "body": {
+      "id": "",
+      "username": "",
+      "firstName": "",
+      "lastName": "",
+      "email": "",
+      "password": "",
+      "phone": "",
+      "userStatus": ""
+    },
+    "mediaType": "application/json"
+  },
+  {
+    "method": "DELETE",
+    "url": "/user/{username}",
+    "operationId": "deleteUser",
+    "path": {
+      "username": "{username}"
+    }
+  }
+]
