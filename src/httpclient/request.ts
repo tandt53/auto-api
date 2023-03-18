@@ -265,7 +265,7 @@ export const request = (config: OpenAPIConfig, options: ApiRequestOptions): Canc
 
             if (!onCancel.isCancelled) {
                 const response = await sendRequest<ApiResult>(config, options, url, body, formData, headers, onCancel);
-                const responseHeader: Record<string, any> = Object.fromEntries(response.headers.entries());
+                const responseHeader: Record<string, any> = Object.fromEntries(Object.entries(response.headers));
 
                 const result: ApiResult = {
                     url,
@@ -276,7 +276,7 @@ export const request = (config: OpenAPIConfig, options: ApiRequestOptions): Canc
                     body: response.data,
                 };
 
-                resolve(result);
+                return resolve(result);
             }
         } catch (error) {
             reject(error);

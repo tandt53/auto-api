@@ -2,6 +2,10 @@ import {OpenAPIV3} from 'openapi-types';
 import SwaggerParser from '@apidevtools/swagger-parser';
 import {ApiRequestOptions} from "../httpclient/ApiRequestOptions";
 
+/**
+ * Parse swagger json to ApiRequestOptions[]
+ * @param swaggerJson
+ */
 export async function parseSwaggerJson(swaggerJson: string): Promise<ApiRequestOptions[]> {
     const apiRequestOptions: ApiRequestOptions[] = [];
 
