@@ -1,11 +1,47 @@
-import axios, {AxiosRequestConfig, AxiosResponse} from "axios";
+import axios, {AxiosError, AxiosRequestConfig, AxiosResponse} from "axios";
 import {ApiSpec} from "./ApiSpec";
 import {ApiResult} from "./ApiResult";
 import {ApiConfig} from "./ApiConfig";
 import qs from 'qs';
 import FormData from 'form-data';
 import fs from "fs";
+import {XMLBuilder} from "fast-xml-parser";
 
+
+/**
+ * Send request
+ * @param specs
+ * @param config
+ */
+export const request = async (specs: ApiSpec, config: ApiConfig): Promise<ApiResult> => {
+    // may consider some default config from .evn or .json or .properties
+
+    // convert ApiSpec to AxiosRequestConfig
+    const axiosRequestConfig: AxiosRequestConfig = {
+        url: getUrl(specs, config),
+        method: specs.method,
+        headers: getHeaders(specs, config),
+        data: getBody(specs, config),
+    }
+
+    console.log(axiosRequestConfig)
+
+    // send request with axios
+    return axios.request(axiosRequestConfig)
+        .then((response: AxiosResponse) => {
+            return {
+                status: response.status,
+                statusText: response.statusText,
+                url: response.config.url,
+                headers: Object.fromEntries(Object.entries(response.headers)),
+                body: response.data
+            }
+        })
+        .catch((error) => {
+            return error.response;
+        });
+
+}
 
 /**
  * Get body
@@ -19,7 +55,7 @@ import fs from "fs";
 function getBody(specs: ApiSpec, config: ApiConfig) {
     switch (specs.mediaType) {
         case 'application/json':
-            return JSON.stringify(specs.body);
+            return specs.body;
         case 'multipart/form-data':
             const formData = new FormData();
             for (const key in specs.formData) {
@@ -35,35 +71,14 @@ function getBody(specs: ApiSpec, config: ApiConfig) {
             return qs.stringify(specs.body);
         case 'application/octet-stream':
             return Buffer.from(specs.body);
+        case 'application/xml':
+            const builder = new XMLBuilder({
+                ignoreAttributes: false
+            });
+            return builder.build(specs.body);
         default:
             return specs.body;
     }
-}
-
-export const request = async (specs: ApiSpec, config: ApiConfig): Promise<ApiResult> => {
-    // may consider some default config from .evn or .json or .properties
-
-    // convert ApiSpec to AxiosRequestConfig
-    const axiosRequestConfig: AxiosRequestConfig = {
-        url: getUrl(specs, config),
-        method: specs.method,
-        headers: getHeaders(specs, config),
-        data: getBody(specs, config),
-    }
-
-    // send request with axios
-    const response = await axios.request(axiosRequestConfig);
-
-    // convert AxiosResponse to ApiResult
-    const apiResult: ApiResult = {
-        status: response.status,
-        statusText: response.statusText,
-        url: response.config.url,
-        headers: Object.fromEntries(Object.entries(response.headers)),
-        body: response.data
-    }
-
-    return apiResult;
 }
 
 
@@ -163,7 +178,8 @@ function getHeaders(specs: ApiSpec, config: ApiConfig): Record<string, string> {
     Object.assign(headers, defaultHeaders, specHeaders);
 
     // add extra header for different media type
-    headers['Accept'] = specs.mediaType;
+    headers['Accept'] = 'application/json';
+    headers['Content-type'] = specs.mediaType;
 
     return headers;
 

@@ -1,4 +1,3 @@
-
 export type ApiConfig = {
     /**
      * The base URL of the API.
@@ -7,11 +6,11 @@ export type ApiConfig = {
     /**
      * The base path of the API.
      */
-    basePath: string;
+    basePath?: string;
 
     /**
      * The default headers to be sent with every request.
      */
-    defaultHeaders: Record<string, string>;
+    defaultHeaders?: Record<string, string>;
 
 }

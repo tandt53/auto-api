@@ -1,6 +1,3 @@
-// create new type for method
-import {Schema} from "./Schema";
-
 export type HttpMethod = 'GET' | 'PUT' | 'POST' | 'DELETE' | 'OPTIONS' | 'HEAD' | 'PATCH';
 
 /**
@@ -10,7 +7,7 @@ export interface ApiSpec {
     url?: string,
     path: string,
     method: HttpMethod,
-    pathParams: Record<string, any>,
+    pathParams?: Record<string, any>,
     query?: Record<string, any>,
     operationId: string,
     cookies?: Record<string, any>,
