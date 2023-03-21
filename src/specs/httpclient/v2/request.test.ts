@@ -1,14 +1,14 @@
 import {ApiSpec, request} from "../../../httpclient";
 import {ApiConfig} from "../../../httpclient/v2/ApiConfig";
-import {createUser, createUserWithFormEncodedUrl, createUserWithXml} from "../../specs/User";
+import {createUser, createUserWithFormEncodedUrl, createUserWithXml} from "../../apiSpec/User";
 import {expect} from "chai";
 
 const defaultConfig: ApiConfig = {
     baseUrl: "https://petstore3.swagger.io/api/v3"
 }
 
-describe('User', () => {
-    it('should be able to create a new user', async () => {
+describe('POST /user', () => {
+    it('should be able to create a new user with application/json', async () => {
         await createUserAndVerify(createUser, defaultConfig)
     });
 
@@ -16,7 +16,7 @@ describe('User', () => {
         await createUserAndVerify(createUserWithFormEncodedUrl, defaultConfig);
     });
 
-    it('should be able to create a new user with xml', async () => {
+    it('should be able to create a new user with application/xml', async () => {
         await createUserAndVerify(createUserWithXml, defaultConfig);
     })
 

@@ -14,9 +14,6 @@ import {XMLBuilder} from "fast-xml-parser";
  * @param config
  */
 export const request = async (specs: ApiSpec, config: ApiConfig): Promise<ApiResult> => {
-    // may consider some default config from .evn or .json or .properties
-
-    // convert ApiSpec to AxiosRequestConfig
     const axiosRequestConfig: AxiosRequestConfig = {
         url: getUrl(specs, config),
         method: specs.method,
@@ -88,7 +85,7 @@ function getBody(specs: ApiSpec, config: ApiConfig) {
  * for example, path = '/api/v1/users/{userId}', pathParams = {userId: '123'}
  * then result = '/api/v1/users/123'
  *  @param path
- * @param pathParams
+ * @param spec
  */
 function getPath(path: string, spec: ApiSpec): string {
     let result = path;
@@ -116,12 +113,11 @@ function getQuery(spec: ApiSpec): string {
 }
 
 /**
- * Get url
- * Url is composed of baseUrl, path and query
+ * URL is composed of baseUrl, path and query
  * for example, baseUrl = 'http://localhost:8080', path = '/api/v1/users', query = 'name=abc&age=18'
  * then result = 'http://localhost:8080/api/v1/users?name=abc&age=18'
  *
- * In general, most of APIs use the same baseUrl, so we can set baseUrl in ApiConfig.
+ * In general, most of the APIs use the same baseUrl, so we can set baseUrl in ApiConfig.
  * However, you might want to use different baseUrl for some APIs (3rd parties), so we can define it in ApiSpec and use it instead of baseUrl in ApiConfig.
  * @param apiSpec
  * @param config

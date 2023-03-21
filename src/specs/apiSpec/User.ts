@@ -37,7 +37,6 @@ export const createUserWithFormEncodedUrl: ApiSpec = {
     mediaType: "application/x-www-form-urlencoded"
 }
 
-
 export const createUserWithXml: ApiSpec = {
     method: "POST",
     operationId: "createUserWithFormEncodedUrl",
