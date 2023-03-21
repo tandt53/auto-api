@@ -1,0 +1,31 @@
+// The following properties are taken from the OpenAPI 3.0.3 specification.
+export interface Schema {
+    title?: string,
+    multipleOf?: number,
+    maximum?: number,
+    exclusiveMaximum?: number,
+    minimum?: number,
+    exclusiveMinimum?: number,
+    maxLength?: number,
+    minLength?: number,
+    pattern?: string,
+    maxItems?: number,
+    minItems?: number,
+    uniqueItems?: boolean,
+    maxProperties?: number,
+    minProperties?: number,
+    required?: string[],
+    enum?: unknown[],
+    type?: string,
+    allOf?: Schema[],
+    oneOf?: Schema[],
+    anyOf?: Schema[],
+    not?: Schema,
+    items?: Schema | Schema[],
+    properties?: Record<string, Schema>,
+    additionalProperties?: Schema | boolean,
+    description?: string,
+    format?: string,
+    default?: unknown
+
+}
