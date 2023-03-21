@@ -7,14 +7,16 @@ export const createUser: ApiSpec = {
     operationId: "createUser",
     path: "/user",
     body: {
-        id: 10,
-        username: "theUser",
-        password: "12345",
-        firstName: "John",
-        lastName: "Doe",
-        email: "john.doe@gmail.com",
-        phone: "123456789",
-        userStatus: 1
+        user: {
+            id: 10,
+            username: "theUser",
+            password: "12345",
+            firstName: "John",
+            lastName: "Doe",
+            email: "john.doe@gmail.com",
+            phone: "123456789",
+            userStatus: 1
+        }
     },
     mediaType: "application/json"
 }
@@ -25,14 +27,16 @@ export const createUserWithFormEncodedUrl: ApiSpec = {
     operationId: "createUserWithFormEncodedUrl",
     path: "/user",
     body: {
-        id: 10,
-        username: "theUser",
-        password: "12345",
-        firstName: "John",
-        lastName: "Doe",
-        email: "john.doe@gmail.com",
-        phone: "123456789",
-        userStatus: 1
+        user: {
+            id: 10,
+            username: "theUser",
+            password: "12345",
+            firstName: "John",
+            lastName: "Doe",
+            email: "john.doe@gmail.com",
+            phone: "123456789",
+            userStatus: 1
+        }
     },
     mediaType: "application/x-www-form-urlencoded"
 }
