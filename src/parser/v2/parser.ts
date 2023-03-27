@@ -127,14 +127,14 @@ function getBodyObject(schema: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObjec
     }
 
     if (schema.type === 'string') {
-        return {body: schema.example || 'string', rule: {type: 'string'}};
+        return {body: schema.example || 'string', rule: {type: 'string', format: schema.format}};
     }
 
     if (schema.type === 'number' || schema.type === 'integer') {
-        return {body: schema.example || 0, rule: {type: 'number'}};
+        return {body: schema.example || 0, rule: {type: 'number', format: schema.format}};
     }
 
-    return {body: schema.default || '', rule: {type: 'string'}};
+    return {body: schema.default || '', rule: {type: 'string', format: schema.format}};
 }
 
 function getTypeData(type: string): any {
