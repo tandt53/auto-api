@@ -1,7 +1,7 @@
+import {ApiSpec} from "./ApiSpec";
 import {Rule} from "./Rule";
-import {ApiRequestOptions} from "../httpclient/ApiRequestOptions";
 
-export interface ApiRequestOptionsWithRules extends ApiRequestOptions {
+export interface ApiSpecWithRules extends ApiSpec {
     formDataRules?: Record<any, Rule>;
     pathRules?: Record<string, Rule>;
     queryRules?: Record<string, Rule>;

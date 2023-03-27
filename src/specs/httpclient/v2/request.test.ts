@@ -1,5 +1,5 @@
 import {ApiSpec, request} from "../../../httpclient";
-import {ApiConfig} from "../../../httpclient/v2/ApiConfig";
+import {ApiConfig} from "../../../httpclient/ApiConfig";
 import {createUser, createUserWithFormEncodedUrl, createUserWithXml} from "../../apiSpec/User";
 import {expect} from "chai";
 

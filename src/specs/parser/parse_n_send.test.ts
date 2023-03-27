@@ -1,7 +1,7 @@
-import {parseSwaggerJson} from "../../parser/v2/parser";
+import {parseSwaggerJson} from "../../parser/parser";
 import {ApiSpec, request} from "../../httpclient";
 import {expect} from "chai";
-import {ApiConfig} from "../../httpclient/v2/ApiConfig";
+import {ApiConfig} from "../../httpclient/ApiConfig";
 
 describe('POST /user', async () => {
     const method = 'POST';

@@ -1,4 +1,4 @@
-import {parseSwaggerJson} from "../../parser/v2/parser";
+import {parseSwaggerJson} from "../../parser/parser";
 
 describe('Parser PetStore Swagger', () => {
     it('should parse successfully', async function () {
