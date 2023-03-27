@@ -1,4 +1,4 @@
-import {ApiSpec} from "../../httpclient";
+import {ApiSpec} from "../../api/ApiSpec";
 
 export const user = '/user';
 

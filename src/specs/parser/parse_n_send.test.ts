@@ -1,7 +1,8 @@
 import {parseSwaggerJson} from "../../parser/parser";
-import {ApiSpec, request} from "../../httpclient";
 import {expect} from "chai";
 import {ApiConfig} from "../../httpclient/ApiConfig";
+import {ApiSpec} from "../../api/ApiSpec";
+import {request} from "../../httpclient/request";
 
 describe('POST /user', async () => {
     const method = 'POST';
@@ -17,7 +18,7 @@ describe('POST /user', async () => {
         console.log('=========================================');
 
         const response = await request(spec, config);
-
+        console.log(JSON.stringify(response, null, 2));
         expect(response.status).to.equal(200);
         expect(response.body).to.have.property('id');
         expect(response.body).to.have.property('username');

@@ -1,4 +1,4 @@
-import axios, {AxiosRequestConfig, AxiosResponse} from "axios";
+import axios, {AxiosError, AxiosRequestConfig, AxiosResponse} from "axios";
 import {ApiSpec} from "../api/ApiSpec";
 import {ApiResult} from "./ApiResult";
 import {ApiConfig} from "./ApiConfig";
@@ -23,20 +23,28 @@ export const request = async (specs: ApiSpec, config: ApiConfig): Promise<ApiRes
 
     console.log(axiosRequestConfig)
 
-    // send request with axios
-    return axios.request(axiosRequestConfig)
-        .then((response: AxiosResponse) => {
+    try {
+        const response = await axios.request(axiosRequestConfig);
+        return {
+            status: response.status,
+            statusText: response.statusText,
+            url: response.config.url,
+            headers: Object.fromEntries(Object.entries(response.headers)),
+            body: response.data
+        }
+    } catch (error) {
+        const axiosError = error as AxiosError;
+        if (axiosError.response) {
             return {
-                status: response.status,
-                statusText: response.statusText,
-                url: response.config.url,
-                headers: Object.fromEntries(Object.entries(response.headers)),
-                body: response.data
-            }
-        })
-        .catch((error) => {
-            return error.response;
-        });
+                status: axiosError.response.status,
+                statusText: axiosError.response.statusText,
+                url: axiosError.response.config.url,
+                headers: Object.fromEntries(Object.entries(axiosError.response.headers)),
+                body: axiosError.response.data
+            };
+        }
+        throw error;
+    }
 
 }
 

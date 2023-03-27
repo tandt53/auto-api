@@ -1,7 +1,8 @@
-import {ApiSpec, request} from "../../../httpclient";
 import {ApiConfig} from "../../../httpclient/ApiConfig";
 import {createUser, createUserWithFormEncodedUrl, createUserWithXml} from "../../apiSpec/User";
 import {expect} from "chai";
+import {ApiSpec} from "../../../api/ApiSpec";
+import {request} from "../../../httpclient/request";
 
 const defaultConfig: ApiConfig = {
     baseUrl: "https://petstore3.swagger.io/api/v3"
@@ -27,6 +28,7 @@ describe('POST /user', () => {
 
     async function createUserAndVerify(spec: ApiSpec, config: ApiConfig) {
         const response = await request(spec, config);
+        console.log(JSON.stringify(response, null, 2));
         expect(response.status).to.equal(200);
         expect(response.body).to.have.property('id');
         expect(response.body).to.have.property('username');
