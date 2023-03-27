@@ -20,6 +20,11 @@ describe('POST /user', () => {
         await createUserAndVerify(createUserWithXml, defaultConfig);
     })
 
+    //TODO
+    // it('should send request with octet-stream', function () {
+    //
+    // });
+
     async function createUserAndVerify(spec: ApiSpec, config: ApiConfig) {
         const response = await request(spec, config);
         expect(response.status).to.equal(200);

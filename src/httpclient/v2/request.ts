@@ -50,9 +50,21 @@ export const request = async (specs: ApiSpec, config: ApiConfig): Promise<ApiRes
  * @param config
  */
 function getBody(specs: ApiSpec, config: ApiConfig) {
+    // navigate to the first key of body -> for json, form-urlencoded
+    // for example, body = {user: {id: 1, username: 'abc'}}
+    // then body = {id: 1, username: 'abc'}
+    let body = specs.body;
+    for (const key in body) {
+        body = body[key];
+        break;
+    }
     switch (specs.mediaType) {
         case 'application/json':
-            return specs.body;
+            return body;
+        case 'application/x-www-form-urlencoded':
+            return qs.stringify(body);
+        case 'application/octet-stream':
+            return Buffer.from(specs.body);
         case 'multipart/form-data':
             const formData = new FormData();
             for (const key in specs.formData) {
@@ -64,10 +76,6 @@ function getBody(specs: ApiSpec, config: ApiConfig) {
                 }
             }
             return formData;
-        case 'application/x-www-form-urlencoded':
-            return qs.stringify(specs.body);
-        case 'application/octet-stream':
-            return Buffer.from(specs.body);
         case 'application/xml':
             const builder = new XMLBuilder({
                 ignoreAttributes: false
