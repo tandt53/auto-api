@@ -1,11 +1,12 @@
-import axios, {AxiosError, AxiosRequestConfig, AxiosResponse} from "axios";
-import {ApiSpec} from "../api/ApiSpec";
+import axios, {AxiosError, AxiosRequestConfig} from "axios";
+import {ApiSpec, HttpMethod} from "../api/ApiSpec";
 import {ApiResult} from "./ApiResult";
 import {ApiConfig} from "./ApiConfig";
 import qs from 'qs';
 import FormData from 'form-data';
 import fs from "fs";
 import {XMLBuilder} from "fast-xml-parser";
+import {ApiSpecWithRules} from "../api/ApiSpecWithRules";
 
 
 /**
@@ -21,7 +22,7 @@ export const request = async (specs: ApiSpec, config: ApiConfig): Promise<ApiRes
         data: getBody(specs, config),
     }
 
-    console.log(axiosRequestConfig)
+    console.log(getCurl(specs, config));
 
     try {
         const response = await axios.request(axiosRequestConfig);
@@ -128,6 +129,17 @@ function getQuery(spec: ApiSpec): string {
     return query;
 }
 
+function getEncodedUrl(apiSpec: ApiSpec) {
+    if (apiSpec.mediaType === 'application/x-www-form-urlencoded') {
+        let body = apiSpec.body;
+        for (const key in body) {
+            body = body[key];
+            break;
+        }
+        return qs.stringify(body);
+    }
+}
+
 /**
  * URL is composed of baseUrl, path and query
  * for example, baseUrl = 'http://localhost:8080', path = '/api/v1/users', query = 'name=abc&age=18'
@@ -141,16 +153,18 @@ function getQuery(spec: ApiSpec): string {
 function getUrl(apiSpec: ApiSpec, config: ApiConfig): string {
     const path = getPath(apiSpec.path, apiSpec);
     const query = getQuery(apiSpec);
+    const encodedUrl = getEncodedUrl(apiSpec);
 
     let hostname = apiSpec.url ? apiSpec.url : config.baseUrl;
     if (hostname.endsWith('/')) {
         hostname = hostname.substring(0, hostname.length - 1);
     }
 
+
     if (path.startsWith('/')) {
-        return `${hostname}${path}${query ? '?' + query : ''}`;
+        return `${hostname}${path}${query ? '?' + query : ''}${encodedUrl ? `?${encodedUrl}` : ''}`;
     } else {
-        return `${hostname}/${path}${query ? '?' + query : ''}`;
+        return `${hostname}/${path}${query ? '?' + query : ''}${encodedUrl ? `?${encodedUrl}` : ''}`;
     }
 }
 
@@ -195,4 +209,78 @@ function getHeaders(specs: ApiSpec, config: ApiConfig): Record<string, string> {
 
     return headers;
 
+}
+
+
+// ========================= API SPEC TO CURL ===================================
+export function getCurl(apiSpec: ApiSpecWithRules, config: ApiConfig): string {
+    const url = getUrl(apiSpec, config);
+    const headers = curlHeaders(getHeaders(apiSpec, config));
+    const method = curlMethod(apiSpec.method);
+    const body = curlBody(apiSpec, true);
+    const formData = curlFormData(apiSpec);
+
+    return prettyCurl(url, headers, method, body, formData);
+    // return curl(url, headers, method, body, formData);
+}
+
+function curlHeaders(headers: Record<string, string>): string[] {
+    return Object.entries(headers).map(([key, value]) => `-H '${key}: ${value}'`);
+}
+
+function curlMethod(method: HttpMethod) {
+    return `-X ${method}`;
+}
+
+function curlBody(apiSpec: ApiSpecWithRules, isPretty = false) {
+    let body = apiSpec.body;
+    for (const key in body) {
+        body = body[key];
+        break;
+    }
+    if (!body || apiSpec.mediaType === 'multipart/form-data' || apiSpec.mediaType === 'application/x-www-form-urlencoded') {
+        return '';
+    }
+    if (apiSpec.mediaType === 'application/json') {
+        return `-d '${isPretty ? JSON.stringify(body, null, 10) : JSON.stringify(body)}'`;
+    } else if (apiSpec.mediaType === 'application/xml' || apiSpec.mediaType === 'text/xml') {
+        const builder = new XMLBuilder({
+            ignoreAttributes: false
+        });
+        return `-d ${builder.build(apiSpec.body)}`;
+    } else {
+        return `-d '${JSON.stringify(body)}'`;
+    }
+}
+
+function curlFormData(apiSpec: ApiSpecWithRules): string[] {
+    if (apiSpec.mediaType === 'multipart/form-data') {
+        return Object.entries(apiSpec.formData).map(([key, value]) => `-F '${key}=${value}'`);
+    } else {
+        return [''];
+    }
+}
+
+function curl(url: string, headers: string[], method: string, body: string, formData: string[]): string {
+    const array = [];
+    array.push(`curl ${method} ${url}`);
+    if (headers[0])
+        array.push(...headers);
+    if (body)
+        array.push(body);
+    if (formData[0])
+        array.push(...formData);
+    return array.join(' ');
+}
+
+function prettyCurl(url: string, headers: string[], method: string, body: string, formData: string[]): string {
+    const array = [];
+    array.push(`curl ${method} ${url}`);
+    if (headers[0])
+        array.push(...headers);
+    if (body)
+        array.push(body);
+    if (formData[0])
+        array.push(...formData);
+    return array.join(' \t \\ \n\t ');
 }
