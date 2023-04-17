@@ -1,0 +1,17 @@
+import { ApiSpec } from "../../api/ApiSpec";
+import { Expect } from "./expect";
+import { Extract } from "./extract";
+import {ApiSpecWithRules} from "../../api/ApiSpecWithRules";
+
+export interface Step {
+    name: string,
+    id: string,
+    description?: string,
+    variables?: Record<string, any>,
+    type?: string,
+    precondition?: Record<string, any>,
+    postcondition?: Record<string, any>,
+    api: ApiSpecWithRules,
+    expect?: Expect,
+    extract?: Extract,
+}

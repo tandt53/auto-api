@@ -5,6 +5,7 @@
     "version": "1.0.0",
     "apis": [
       {
+        "api": "PUT /pet",
         "path": "/pet",
         "method": "PUT",
         "description": "Verify OTP",

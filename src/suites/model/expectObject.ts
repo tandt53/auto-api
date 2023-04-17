@@ -1,0 +1,29 @@
+/**
+ * validate the response of the request
+ *
+ */
+export interface Expect {
+    code?: number,
+    message?: string
+    headers?: Record<string, any>,
+    body?: Record<string, any>,
+}
+
+/**
+ * validate the response of the request
+ * name: the name of the header
+ * value: the expected value of the header.
+ * - value can be a regex, e.g. "value": "^[0-9]{3}$"
+ * - value can be a string, e.g. "value": "application/json"
+ * - value can be a number, e.g. "value": 123
+ * - value can be a boolean, e.g. "value": true
+ * - value can be an array, e.g. "value": [1,2,3]
+ * - value can be an object, e.g. "value": {"a": 1, "b": 2} -> this is not recommended, because the order of the keys is not guaranteed
+ * - value can be null, e.g. "value": null
+ * - value can be undefined, e.g. "value": undefined
+ * - value can be a function, e.g. "value": function(value) { return value === "application/json" }
+ */
+export interface HeaderExpect {
+    name: string,
+    value: string,
+}
