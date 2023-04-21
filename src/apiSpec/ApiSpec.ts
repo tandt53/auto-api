@@ -4,12 +4,12 @@ export type HttpMethod = 'GET' | 'PUT' | 'POST' | 'DELETE' | 'OPTIONS' | 'HEAD' 
  * ApiSpec is the specification of an API call.
  */
 export interface ApiSpec {
+    operationId: string,
     url?: string,
     path: string,
     method: HttpMethod,
     pathParams?: Record<string, any>,
     query?: Record<string, any>,
-    operationId: string,
     cookies?: Record<string, any>,
     headers?: Record<string, any>,
     formData?: Record<string, FormDataItem>,

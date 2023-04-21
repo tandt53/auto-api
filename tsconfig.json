@@ -9,6 +9,36 @@
   },
   "include": [
     "./src/**/*"
-  ]
+  ],
+  "baseUrl": "./",
+  "paths": {
+    "@/*": [
+      "src/*"
+    ],
+    "@apiSpec/*": [
+      "src/apiSpec/*"
+    ],
+    "@cli/*": [
+      "src/cli/*"
+    ],
+    "@commands/*": [
+      "src/commands/*"
+    ],
+    "@execution/*": [
+      "src/execution/*"
+    ],
+    "@httpclient/*": [
+      "src/httpclient/*"
+    ],
+    "@parser/*": [
+      "src/parser/*"
+    ],
+    "@testSpec/*": [
+      "src/testSpec/*"
+    ],
+    "@data/*": [
+      "data/*"
+    ]
+  }
 }
 

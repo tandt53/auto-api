@@ -1,4 +1,4 @@
-export interface Extract {
+export interface ExtractObject {
     code?: number,
     message?: string,
     headers?: Record<string, string>,

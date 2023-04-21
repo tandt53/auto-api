@@ -1,0 +1,84 @@
+---
+info:
+  title: create user
+  description: create user
+  type: api
+  version: 1.0.0
+  variables:
+    - key: id
+      value: 10
+    - key: username
+      value: 'theUser'
+    - key: password
+      value: '12345'
+    - key: email
+      value: 'john.doe@gmail.com'
+    - key: firstName
+      value: 'John'
+    - key: lastName
+      value: 'Doe'
+    - key: phone
+      value: '012345678901'
+    - key: userStatus
+      value: 1
+  before:
+    - <apis>
+  after:
+    - <apis>
+  steps:
+    - step: 'POST /user'
+      description: create user
+      variables:
+        - key: id
+          value: 10
+        - key: username
+          value: 'theUser'
+        - key: password
+          value: '12345'
+      request:
+        path: '/user'
+        method: POST
+        url: https://petstore.swagger.io/v3
+        cookies:
+        headers:
+          - key: Content-Type
+            value: application/json
+        query:
+        formData:
+        pathParams:
+        body:
+          - type: json
+            data: '{"id": ${id}, "username": "${username}", "password": "${password}", "email": "${email}", "firstName": "${firstName}", "lastName": "${lastName}", "phone": "${phone}", "userStatus": ${userStatus}}'
+          - type: xml
+            data: '<user><id>${id}</id><username>${username}</username><password>${password}</password><email>${email}</email><firstName>${firstName}</firstName><lastName>${lastName}</lastName><phone>${phone}</phone><userStatus>${userStatus}</userStatus></user>'
+          - type: text
+            data: 'some text'
+          - type: json-keys
+            data:
+              - key: id
+                value: '${id}'
+              - key: username
+                value: '${username}'
+              - key: password
+                value: '${password}'
+              - key: email
+                value: '${email}'
+              - key: firstName
+                value: '${firstName}'
+              - key: lastName
+                value: '${lastName}'
+              - key: phone
+                value: '${phone}'
+              - key: userStatus
+                value: '${userStatus}'
+      response:
+        expect:
+          code: 200
+          message: OK
+          body:
+            - key: id
+              value: 10
+            - key: username
+              value: 'theUser'
+            - key: email
+              value: 'john.doe@gmail.com'

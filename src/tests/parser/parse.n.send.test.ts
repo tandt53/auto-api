@@ -1,7 +1,7 @@
 import {parseSwaggerJson} from "../../parser/parser";
 import {expect} from "chai";
 import {ApiConfig} from "../../httpclient/ApiConfig";
-import {ApiSpec} from "../../api/ApiSpec";
+import {ApiSpec} from "../../apiSpec/ApiSpec";
 import {request} from "../../httpclient/request";
 
 describe('POST /user', async () => {

@@ -1,14 +1,16 @@
+import {VariableObject} from "./variableObject";
+
 /**
  * validate the response of the request
- *
  */
-export interface Expect {
+export interface ExpectObject {
     code?: number,
     message?: string
-    headers?: Record<string, any>,
-    body?: Record<string, any>,
+    headers?: VariableObject[],
+    body?: VariableObject[],
 }
 
+//TODO follow the guide below to create and test validation methods
 /**
  * validate the response of the request
  * name: the name of the header

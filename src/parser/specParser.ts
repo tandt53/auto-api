@@ -4,11 +4,11 @@
  */
 import SwaggerParser from "@apidevtools/swagger-parser";
 import {OpenAPIV3} from "openapi-types";
-import {Rule} from "../api/Rule";
-import {ApiSpecWithRules} from "../api/ApiSpecWithRules";
-import {ApiSpec} from "../api/ApiSpec";
+import {Rule} from "../apiSpec/Rule";
+import {ApiSpecWithRules} from "../apiSpec/ApiSpecWithRules";
+import {ApiSpec} from "../apiSpec/ApiSpec";
 
-export async function parseSwaggerJson(swaggerJson: string): Promise<ApiSpecWithRules[]> {
+export async function specParser(swaggerJson: string): Promise<ApiSpecWithRules[]> {
     const apiSpecs: ApiSpecWithRules[] = [];
 
     const api = await SwaggerParser.parse(swaggerJson) as OpenAPIV3.Document;

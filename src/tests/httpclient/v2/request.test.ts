@@ -1,7 +1,7 @@
 import {ApiConfig} from "../../../httpclient/ApiConfig";
 import {createUser, createUserWithFormEncodedUrl, createUserWithXml} from "../../apiSpec/User";
 import {expect} from "chai";
-import {ApiSpec} from "../../../api/ApiSpec";
+import {ApiSpec} from "../../../apiSpec/ApiSpec";
 import {request} from "../../../httpclient/request";
 
 const defaultConfig: ApiConfig = {
