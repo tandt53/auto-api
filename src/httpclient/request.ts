@@ -1,12 +1,12 @@
 import axios, {AxiosError, AxiosRequestConfig} from "axios";
-import {ApiSpec, HttpMethod} from "../apiSpec/ApiSpec";
+import {ApiSpec, HttpMethod} from "@apiSpec/ApiSpec";
 import {ApiResult} from "./ApiResult";
 import {ApiConfig} from "./ApiConfig";
 import qs from 'qs';
 import FormData from 'form-data';
 import fs from "fs";
 import {XMLBuilder} from "fast-xml-parser";
-import {ApiSpecWithRules} from "../apiSpec/ApiSpecWithRules";
+import {ApiSpecWithRules} from "@apiSpec/ApiSpecWithRules";
 
 
 /**

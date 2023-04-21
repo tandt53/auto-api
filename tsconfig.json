@@ -5,40 +5,41 @@
     "esModuleInterop": true,
     "outDir": "./dist",
     "rootDir": "./src",
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "baseUrl": "./",
+    "paths": {
+      "@/*": [
+        "src/*"
+      ],
+      "@apiSpec/*": [
+        "src/apiSpec/*"
+      ],
+      "@cli/*": [
+        "src/cli/*"
+      ],
+      "@commands/*": [
+        "src/commands/*"
+      ],
+      "@execution/*": [
+        "src/execution/*"
+      ],
+      "@httpclient/*": [
+        "src/httpclient/*"
+      ],
+      "@parser/*": [
+        "src/parser/*"
+      ],
+      "@testSpec/*": [
+        "src/testSpec/*"
+      ],
+      "@data/*": [
+        "data/*"
+      ]
+    }
   },
   "include": [
     "./src/**/*"
   ],
-  "baseUrl": "./",
-  "paths": {
-    "@/*": [
-      "src/*"
-    ],
-    "@apiSpec/*": [
-      "src/apiSpec/*"
-    ],
-    "@cli/*": [
-      "src/cli/*"
-    ],
-    "@commands/*": [
-      "src/commands/*"
-    ],
-    "@execution/*": [
-      "src/execution/*"
-    ],
-    "@httpclient/*": [
-      "src/httpclient/*"
-    ],
-    "@parser/*": [
-      "src/parser/*"
-    ],
-    "@testSpec/*": [
-      "src/testSpec/*"
-    ],
-    "@data/*": [
-      "data/*"
-    ]
-  }
+
 }
 

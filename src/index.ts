@@ -1,6 +1,6 @@
-import {specParser} from "./parser/specParser";
-import {request} from "./httpclient/request";
-import {ApiConfig} from "./httpclient/ApiConfig";
+import {specParser} from "@parser/specParser";
+import {request} from "@httpclient/request";
+import {ApiConfig} from "@httpclient/ApiConfig";
 
 
 async function main(){

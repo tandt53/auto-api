@@ -1,4 +1,4 @@
-import { ApiSpec } from "../../apiSpec/ApiSpec";
+import { ApiSpec } from "@apiSpec/ApiSpec";
 
 export const user = '/user';
 

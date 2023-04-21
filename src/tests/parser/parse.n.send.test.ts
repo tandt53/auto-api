@@ -1,8 +1,8 @@
-import {parseSwaggerJson} from "../../parser/parser";
 import {expect} from "chai";
-import {ApiConfig} from "../../httpclient/ApiConfig";
-import {ApiSpec} from "../../apiSpec/ApiSpec";
-import {request} from "../../httpclient/request";
+import {ApiConfig} from "@httpclient/ApiConfig";
+import {ApiSpec} from "@apiSpec/ApiSpec";
+import {request} from "@httpclient/request";
+import {specParser} from "@parser/specParser";
 
 describe('POST /user', async () => {
     const method = 'POST';
@@ -11,7 +11,7 @@ describe('POST /user', async () => {
         baseUrl: "https://petstore3.swagger.io/api/v3"
     }
     it('should parse and send request successfully', async function () {
-        const apiSpecs: ApiSpec[] = await parseSwaggerJson('openapi.json');
+        const apiSpecs: ApiSpec[] = await specParser('openapi.json');
         // console.log(JSON.stringify(apiSpecs, null, 2));
         const spec = apiSpecs.find((apiSpec) => apiSpec.method === method && apiSpec.path === path);
         console.log(JSON.stringify(spec, null, 2));

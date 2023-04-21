@@ -1,4 +1,4 @@
-import {TestObject} from "../testSpec/model/testObject";
+import {TestObject} from "@testSpec/model/testObject";
 
 /**
  * this method will parse the test.yml to get the test spec

@@ -1,8 +1,8 @@
-import {ApiConfig} from "../../../httpclient/ApiConfig";
+import {ApiConfig} from "@httpclient/ApiConfig";
 import {createUser, createUserWithFormEncodedUrl, createUserWithXml} from "../../apiSpec/User";
 import {expect} from "chai";
-import {ApiSpec} from "../../../apiSpec/ApiSpec";
-import {request} from "../../../httpclient/request";
+import {ApiSpec} from "@apiSpec/ApiSpec";
+import {request} from "@httpclient/request";
 
 const defaultConfig: ApiConfig = {
     baseUrl: "https://petstore3.swagger.io/api/v3"
