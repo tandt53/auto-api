@@ -1,4 +1,7 @@
 import {TestObject} from "@testSpec/model/testObject";
+import * as yaml from 'js-yaml';
+import * as fs from 'fs';
+
 
 /**
  * this method will parse the test.yml to get the test spec
@@ -6,6 +9,8 @@ import {TestObject} from "@testSpec/model/testObject";
  * @param testDesign the test design file (.yml)
  * @returns TestObject[] an array of test specs
  */
-export function testParser(testDesign: string): Promise<TestObject[]> {
-    throw new Error("Not implemented");
+export function testParser(testDesign: string): any {
+    const fileContent = fs.readFileSync(testDesign, 'utf8');
+    const testObject = yaml.load(fileContent);
+    return testObject;
 }

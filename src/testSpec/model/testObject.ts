@@ -1,13 +1,14 @@
 import {StepObject} from "./stepObject";
+import {VariableObject} from "@testSpec/model/variableObject";
 
 export interface TestObject {
     name: string,
     description: string,
     id: string,
     type: 'api' | 'flow'
-    variables: Record<string, any>,
+    variables: VariableObject[],
     before?: StepObject[],
     after?: StepObject[],
-    apis?: StepObject[],
+    steps?: StepObject[],
     environment: string,
 }
