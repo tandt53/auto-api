@@ -1,4 +1,3 @@
-import {TestObject} from "@testSpec/model/testObject";
 import * as yaml from 'js-yaml';
 import * as fs from 'fs';
 
@@ -11,6 +10,5 @@ import * as fs from 'fs';
  */
 export function testParser(testDesign: string): any {
     const fileContent = fs.readFileSync(testDesign, 'utf8');
-    const testObject = yaml.load(fileContent);
-    return testObject;
+    return yaml.load(fileContent);
 }

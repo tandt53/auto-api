@@ -38,6 +38,7 @@
     "figlet": "1.5.2",
     "form-data": "4.0.0",
     "inquirer": "9.1.4",
+    "jsonpath": "1.1.1",
     "openapi-types": "12.1.0",
     "qs": "6.11.1",
     "registry.npmjs.org": "^1.0.1",

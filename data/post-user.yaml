@@ -55,32 +55,38 @@ steps:
       formData:
       pathParams:
       body:
-          type: json-keys
-          data:
-            - key: id
-              value: '${id}'
-            - key: username
-              value: '${username}'
-            - key: password
-              value: '${password}'
-            - key: email
-              value: '${email}'
-            - key: firstName
-              value: '${firstName}'
-            - key: lastName
-              value: '${lastName}'
-            - key: phone
-              value: '${phone}'
-            - key: userStatus
-              value: '${userStatus}'
+        type: json-keys
+        data:
+          - key: id
+            value: '${id}'
+          - key: username
+            value: '${username}'
+          - key: password
+            value: '${password}'
+          - key: email
+            value: '${email}'
+          - key: firstName
+            value: '${firstName}'
+          - key: lastName
+            value: '${lastName}'
+          - key: phone
+            value: '${phone}'
+          - key: userStatus
+            value: '${userStatus}'
     response:
       expect:
         code: 200
         message: OK
         body:
+          - key: message
+            value: 'ok'
           - key: id
             value: 10
           - key: username
             value: 'theUser'
           - key: email
             value: 'john.doe@gmail.com'
+      extract:
+        body:
+          - key: message
+            value: id

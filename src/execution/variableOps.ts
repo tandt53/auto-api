@@ -21,4 +21,13 @@ export class VariableOps {
         }
         return str;
     }
+
+    static push(key: string, actualValue: any, testVariables: VariableObject[]) {
+        const variable = testVariables.find(variable => variable.key === key);
+        if (variable) {
+            variable.value = actualValue;
+        } else {
+            testVariables.push({key, value: actualValue});
+        }
+    }
 }

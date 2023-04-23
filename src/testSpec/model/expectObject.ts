@@ -25,7 +25,3 @@ export interface ExpectObject {
  * - value can be undefined, e.g. "value": undefined
  * - value can be a function, e.g. "value": function(value) { return value === "application/json" }
  */
-export interface HeaderExpect {
-    name: string,
-    value: string,
-}

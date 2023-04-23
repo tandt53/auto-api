@@ -5,6 +5,8 @@ import {VariableObject} from "@testSpec/model/variableObject";
 import {VariableOps} from "@execution/variableOps";
 import {RequestBodyObject} from "@testSpec/model/requestBodyObject";
 import {request} from "@httpclient/request";
+import jsonpath from 'jsonpath';
+import {ExtractItemObject} from "@testSpec/model/extractItemObject";
 
 function buildUrl(url: string, vars: VariableObject[], stepVariables: VariableObject[], environment: string) {
     if (url) {
@@ -106,7 +108,7 @@ export async function execute(testSpec: TestObject[], apiSpecs: ApiSpec[], apiCo
 
     for (const test of testSpec) {
 
-        const vars = test.variables;
+        const testVariables = test.variables;
         const steps = test.steps;
         const before = test.before;
         const after = test.after;
@@ -125,26 +127,120 @@ export async function execute(testSpec: TestObject[], apiSpecs: ApiSpec[], apiCo
 
             const apiSpec = apiSpecs.find(apiSpec => apiSpec.path === stepRequest.path && apiSpec.method === stepRequest.method);
             if (apiSpec) {
-                // now we have the apiSpec that contains all spec information
+                // now we have the apiSpec that contains all spec information,
                 // and we also have the request object that contains the actual request
                 // we can now execute the request
-                apiSpec.url = buildUrl(stepRequest.url, vars, stepVariables, environment);
-                apiSpec.pathParams = buildPathParams(stepRequest.pathParams, vars, stepVariables, environment);
-                apiSpec.query = buildQuery(stepRequest.query, vars, stepVariables, environment);
-                apiSpec.cookies = buildCookies(stepRequest.cookies, vars, stepVariables, environment);
-                apiSpec.headers = buildHeaders(stepRequest.headers, vars, stepVariables, environment);
-                apiSpec.formData = buildFormData(stepRequest.formData, vars, stepVariables, environment);
-                apiSpec.body = buildBody(apiSpec.body, stepRequest.body, vars, stepVariables, environment);
+                apiSpec.url = buildUrl(stepRequest.url, testVariables, stepVariables, environment);
+                apiSpec.pathParams = buildPathParams(stepRequest.pathParams, testVariables, stepVariables, environment);
+                apiSpec.query = buildQuery(stepRequest.query, testVariables, stepVariables, environment);
+                apiSpec.cookies = buildCookies(stepRequest.cookies, testVariables, stepVariables, environment);
+                apiSpec.headers = buildHeaders(stepRequest.headers, testVariables, stepVariables, environment);
+                apiSpec.formData = buildFormData(stepRequest.formData, testVariables, stepVariables, environment);
+                apiSpec.body = buildBody(apiSpec.body, stepRequest.body, testVariables, stepVariables, environment);
 
                 // execute the request
                 const response = await request(apiSpec, apiConfig);
                 console.log(JSON.stringify(response));
 
+                // validate the response
+                const expectedInfo = stepResponse.expect;
+                if (expectedInfo) {
+                    const expCode = expectedInfo.code;
+
+                    if (expCode) {
+                        if (expCode === response.status) {
+                            // success
+                            console.log(successMessage(expCode, response.status));
+                        } else {
+                            // fail
+                            failMessage(expCode, response.status)
+                        }
+                    }
+
+                    const expMessage = expectedInfo.message;
+                    if (expMessage) {
+                        if (expMessage === response.statusText) {
+                            // success
+                            console.log(successMessage(expMessage, response.statusText));
+                        } else {
+                            // fail
+                            failMessage(expMessage, response.statusText)
+                        }
+                    }
+                    const expHeaders = expectedInfo.headers;
+                    if (expHeaders) {
+                        for (const key in expHeaders) {
+                            const expectedValue = expHeaders[key];
+                            const actualValue = response.headers[key];
+                            if (expectedValue.value === actualValue) {
+                                // success
+                                console.log(successMessage(expectedValue.value, actualValue));
+                            } else {
+                                // fail
+                                failMessage(expectedValue.value, actualValue)
+                            }
+                        }
+                    }
+
+                    const expects: VariableObject[] = expectedInfo.body;
+                    const jsonStringify = JSON.stringify(response.body);
+                    const jsonObject = JSON.parse(jsonStringify);
+                    if (expects) {
+                        expects.forEach((expect: VariableObject) => {
+                            const key = expect.key;
+                            const value = expect.value;
+                            const actualValue = jsonpath.value(jsonObject, '$.' + key);
+                            if (value === actualValue) {
+                                // success
+                                console.log(successMessage(value, actualValue));
+                            } else {
+                                // fail
+                                console.log(failMessage(value, actualValue));
+                            }
+                        });
+                    }
+
+                }
+
+                // extract values from response
+                const extractInfo = stepResponse.extract;
+                if (extractInfo) {
+                    const extHeaders = extractInfo.headers;
+                    const extBody = extractInfo.body;
+
+                    if (extHeaders) {
+                        extHeaders.forEach((exh) => {
+                            const key = exh.key;
+                            const varName = exh.value;
+                            const varValue = response.headers[key];
+                            VariableOps.push(varName, varValue, testVariables);
+                        });
+                    }
+
+                    if (extBody) {
+                        const jsonStringify = JSON.stringify(response.body);
+                        const jsonObject = JSON.parse(jsonStringify);
+                        extBody.forEach((exb) => {
+                            const key = exb.key;
+                            const varName = exb.value;
+                            const varValue = jsonpath.value(jsonObject, '$.' + key);
+                            VariableOps.push(varName, varValue, testVariables);
+                            console.log(`${JSON.stringify(testVariables)}`);
+                        });
+                    }
+                }
             } else {
                 // new API that does not exist in the API spec -> first throw an error, later will execute request as is
+                // TODO: implement
             }
-
         }
-
     }
+}
+
+function failMessage(expected: any, actual: any): string {
+    return `FAIL - Expected: ${expected}, Actual: ${actual}`;
+}
+
+function successMessage(expected: any, actual: any): string {
+    return `SUCCESS - Expected: ${expected}, Actual: ${actual}`;
 }
