@@ -1,10 +1,10 @@
 import {VariableObject} from "@testSpec/model/variableObject";
 
-const REGEX_VARIABLE = /\${(\w+)}/g;
 
 export class VariableOps {
 
     static isContainsVariable(str: string): boolean {
+        const REGEX_VARIABLE = /\${(\w+)}/g;
         return REGEX_VARIABLE.test(str);
     }
 

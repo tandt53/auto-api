@@ -38,7 +38,7 @@ info:
       request:
         path: '/user'
         method: POST
-        url: https://petstore.swagger.io/v3
+        url: https://petstore3.swagger.io/api/v3
         cookies:
         headers:
           - key: Content-Type
@@ -56,7 +56,7 @@ info:
           - type: json-keys
             data:
               - key: id
-                value: '${id}'
+                value: ${id}
               - key: username
                 value: '${username}'
               - key: password

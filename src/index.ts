@@ -13,7 +13,7 @@ async function main() {
     const method = 'POST';
 
     const apiConfig: ApiConfig = {
-        baseUrl: 'https://petstore3.swagger.io/api/v3/',
+        baseUrl: 'https://petstore3.swagger.io/api/v3',
     }
     // const apiRequestOption = apiRequestOptions.find(apiRequestOption => apiRequestOption.path === path && apiRequestOption.method === method);
     // const response = await request(apiRequestOption, apiConfig);
@@ -28,10 +28,6 @@ async function main() {
     // execute
     await execute([testObject], apiRequestOptions, apiConfig)
 
-    ///
-    const regex = /\${(\w+)}/g;
-    const str = '${username}';
-    console.log(regex.test(str));
 
 }
 

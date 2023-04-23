@@ -57,15 +57,7 @@ function buildHeaders(headers: VariableObject[], vars: VariableObject[], stepVar
 }
 
 function buildFormData(formData: VariableObject[], vars: VariableObject[], stepVariables: VariableObject[], environment: string) {
-    // if (formData) {
-    //     return formData.map(data => {
-    //         const value = data.value;
-    //         if (typeof value === 'string' && VariableOps.isContainsVariable(value)) {
-    //             data.value = VariableOps.getValue(value, vars, stepVariables);
-    //         }
-    //         return data;
-    //     });
-    // }
+    //TODO: implement
     return undefined;
 }
 
@@ -133,7 +125,6 @@ export async function execute(testSpec: TestObject[], apiSpecs: ApiSpec[], apiCo
 
             const apiSpec = apiSpecs.find(apiSpec => apiSpec.path === stepRequest.path && apiSpec.method === stepRequest.method);
             if (apiSpec) {
-                // execute
                 // now we have the apiSpec that contains all spec information
                 // and we also have the request object that contains the actual request
                 // we can now execute the request
