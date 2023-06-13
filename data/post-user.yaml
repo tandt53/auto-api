@@ -58,21 +58,21 @@ steps:
         type: json-keys
         data:
           - key: id
-            value: '${id}'
+            value: ${id}
           - key: username
-            value: '${username}'
+            value: ${username}
           - key: password
-            value: '${password}'
+            value: ${password}
           - key: email
-            value: '${email}'
+            value: ${email}
           - key: firstName
-            value: '${firstName}'
+            value: ${firstName}
           - key: lastName
-            value: '${lastName}'
+            value: ${lastName}
           - key: phone
-            value: '${phone}'
+            value: ${phone}
           - key: userStatus
-            value: '${userStatus}'
+            value: ${userStatus}
     response:
       expect:
         code: 200
