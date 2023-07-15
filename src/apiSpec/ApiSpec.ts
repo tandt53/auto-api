@@ -21,7 +21,7 @@ export interface ApiSpec {
 
 
 export type FormDataItem = {
-    value: any,
+    value: string,
     type: string,
     format: string,
 }
