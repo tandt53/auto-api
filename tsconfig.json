@@ -7,6 +7,10 @@
     "rootDir": "./src",
     "moduleResolution": "node",
     "baseUrl": "./",
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
     "paths": {
       "@/*": [
         "src/*"
