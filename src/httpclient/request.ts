@@ -49,6 +49,7 @@ export const request = async (specs: ApiSpec, config: ApiConfig): Promise<ApiRes
 
 }
 
+// @ts-ignore
 /**
  * Get body
  * if mediaType is application/json, convert body to JSON string
@@ -261,6 +262,7 @@ function curlFormData(apiSpec: ApiSpecWithRules): string[] {
     }
 }
 
+// @ts-ignore
 function curl(url: string, headers: string[], method: string, body: string, formData: string[]): string {
     const array = [];
     array.push(`curl ${method} ${url}`);
