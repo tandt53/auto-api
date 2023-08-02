@@ -11,7 +11,7 @@ export class VariableOps {
     static getValue(str: string, testVars: VariableObject[], stepVars: VariableObject[]) {
         const REGEX_VARIABLE = /\${(\w+)}/g;
         while (REGEX_VARIABLE.test(str)) {
-            str = str.replaceAll(REGEX_VARIABLE, (match, p1) => {
+            str = str.replaceAll(REGEX_VARIABLE, (_match, p1) => {
                 const replacement = stepVars.find(stepVar => stepVar.key === p1)?.value || testVars.find(testVar => testVar.key === p1)?.value;
                 if (replacement) {
                     return `${replacement}`;

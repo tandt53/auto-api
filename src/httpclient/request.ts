@@ -19,7 +19,7 @@ export const request = async (specs: ApiSpec, config: ApiConfig): Promise<ApiRes
         url: getUrl(specs, config),
         method: specs.method,
         headers: getHeaders(specs, config),
-        data: getBody(specs, config),
+        data: getBody(specs),
     }
 
     console.log(getCurl(specs, config));
@@ -49,7 +49,6 @@ export const request = async (specs: ApiSpec, config: ApiConfig): Promise<ApiRes
 
 }
 
-// @ts-ignore
 /**
  * Get body
  * if mediaType is application/json, convert body to JSON string
@@ -57,17 +56,16 @@ export const request = async (specs: ApiSpec, config: ApiConfig): Promise<ApiRes
  * if mediaType is application/x-www-form-urlencoded, convert body to URLSearchParams
  * if mediaType is application/octet-stream, convert body to Buffer
  * @param specs
- * @param config
  */
-function getBody(specs: ApiSpec, config: ApiConfig) {
+function getBody(specs: ApiSpec) {
     // navigate to the first key of body -> for json, form-urlencoded
     // for example, body = {user: {id: 1, username: 'abc'}}
     // then body = {id: 1, username: 'abc'}
-    let body = specs.body;
-    for (const key in body) {
-        body = body[key];
-        break;
-    }
+    let body = specs.body[Object.keys(specs.body)[0]];
+    // for (const key in body) {
+    //     body = body[key];
+    //     break;
+    // }
     switch (specs.mediaType) {
         case 'application/json':
             return body;
@@ -132,11 +130,11 @@ function getQuery(spec: ApiSpec): string {
 
 function getEncodedUrl(apiSpec: ApiSpec) {
     if (apiSpec.mediaType === 'application/x-www-form-urlencoded') {
-        let body = apiSpec.body;
-        for (const key in body) {
-            body = body[key];
-            break;
-        }
+        let body = apiSpec.body[Object.keys(apiSpec.body)[0]];
+        // for (const key in body) {
+        //     body = body[key];
+        //     break;
+        // }
         return qs.stringify(body);
     }
 }
@@ -222,7 +220,6 @@ export function getCurl(apiSpec: ApiSpecWithRules, config: ApiConfig): string {
     const formData = curlFormData(apiSpec);
 
     return prettyCurl(url, headers, method, body, formData);
-    // return curl(url, headers, method, body, formData);
 }
 
 function curlHeaders(headers: Record<string, string>): string[] {
@@ -234,11 +231,11 @@ function curlMethod(method: HttpMethod) {
 }
 
 function curlBody(apiSpec: ApiSpecWithRules, isPretty = false) {
-    let body = apiSpec.body;
-    for (const key in body) {
-        body = body[key];
-        break;
-    }
+    let body = apiSpec.body[Object.keys(apiSpec.body)[0]];
+    // for (const key in body) {
+    //     body = body[key];
+    //     break;
+    // }
     if (!body || apiSpec.mediaType === 'multipart/form-data' || apiSpec.mediaType === 'application/x-www-form-urlencoded') {
         return '';
     }
