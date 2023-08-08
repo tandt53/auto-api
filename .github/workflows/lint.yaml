@@ -1,2 +1,6 @@
-- name: Lint Action
-  uses: wearerequired/lint-action@v2.3.0
+name: GitHub Actions Demo
+run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
+on: [push]
+jobs:
+  - name: Lint Action
+    uses: wearerequired/lint-action@v2.3.0
