@@ -6,15 +6,10 @@ import {TestObject} from "@testSpec/model/testObject";
 
 async function main() {
     const apiRequestOptions = await specParser('openapi.json');
-    const path = '/user';
-    const method = 'POST';
 
     const apiConfig: ApiConfig = {
         baseUrl: 'https://petstore3.swagger.io/api/v3',
     }
-    // const apiRequestOption = apiRequestOptions.find(apiRequestOption => apiRequestOption.path === path && apiRequestOption.method === method);
-    // const response = await request(apiRequestOption, apiConfig);
-    // console.log(JSON.stringify(response));
 
     // parse test
     const yamlFile = 'data/post-user.yaml';
