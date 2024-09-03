@@ -1,0 +1,50 @@
+{
+  "path": "/user",
+  "method": "POST",
+  "operationId": "createUser",
+  "body": {
+    "user": {
+      "id": 10,
+      "username": "theUser",
+      "firstName": "John",
+      "lastName": "James",
+      "email": "john@email.com",
+      "password": "12345",
+      "phone": "12345",
+      "userStatus": 1
+    }
+  },
+  "bodyRules": {
+    "type": "object",
+    "user": {
+      "type": "object",
+      "id": {
+        "type": "number",
+        "format": "int64"
+      },
+      "username": {
+        "type": "string"
+      },
+      "firstName": {
+        "type": "string"
+      },
+      "lastName": {
+        "type": "string"
+      },
+      "email": {
+        "type": "string"
+      },
+      "password": {
+        "type": "string"
+      },
+      "phone": {
+        "type": "string"
+      },
+      "userStatus": {
+        "type": "number",
+        "format": "int32"
+      }
+    }
+  },
+  "mediaType": "application/json"
+}

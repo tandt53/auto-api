@@ -33,25 +33,25 @@ export async function specParser(swaggerJson: string): Promise<ApiSpecWithRules[
                                     if (!apiSpec.pathParams) {
                                         apiSpec.pathParams = {};
                                     }
-                                    apiSpec.pathParams[parameter.name] = parameter.example || getTypeData(parameter.type) || `{${parameter.name}}`;
+                                    apiSpec.pathParams[parameter.name] = parameter.example || getData(parameter.type) || `{${parameter.name}}`;
                                     break;
                                 case 'query':
                                     if (!apiSpec.query) {
                                         apiSpec.query = {};
                                     }
-                                    apiSpec.query[parameter.name] = parameter.example || getTypeData(parameter.schema.type) || `{${parameter.name}}`;
+                                    apiSpec.query[parameter.name] = parameter.example || getData(parameter.schema.type) || `{${parameter.name}}`;
                                     break;
                                 case 'header':
                                     if (!apiSpec.headers) {
                                         apiSpec.headers = {};
                                     }
-                                    apiSpec.headers[parameter.name] = parameter.example || getTypeData(parameter.schema.type) || `{${parameter.name}}`;
+                                    apiSpec.headers[parameter.name] = parameter.example || getData(parameter.schema.type) || `{${parameter.name}}`;
                                     break;
                                 case 'cookie':
                                     if (!apiSpec.cookies) {
                                         apiSpec.cookies = {};
                                     }
-                                    apiSpec.cookies[parameter.name] = parameter.example || getTypeData(parameter.schema.type) || `{${parameter.name}}`;
+                                    apiSpec.cookies[parameter.name] = parameter.example || getData(parameter.schema.type) || `{${parameter.name}}`;
                                     break;
                             }
                         }
@@ -78,7 +78,6 @@ export async function specParser(swaggerJson: string): Promise<ApiSpecWithRules[
                             }
                         }
                     }
-
 
                     apiSpecs.push(apiSpec);
                 }
@@ -137,10 +136,10 @@ function getBodyObject(schema: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObjec
     return {body: schema.default || '', rule: {type: 'string', format: schema.format}};
 }
 
-function getTypeData(type: string): any {
+function getData(type: string): any {
     switch (type) {
         case 'string':
-            return 'string';
+            return '';
         case 'number':
         case 'integer':
             return 0;
@@ -151,6 +150,6 @@ function getTypeData(type: string): any {
         case 'object':
             return {};
         default:
-            return 'string';
+            return '';
     }
 }

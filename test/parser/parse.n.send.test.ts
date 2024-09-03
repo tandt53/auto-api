@@ -1,8 +1,8 @@
 import {expect} from "chai";
-import {ApiConfig} from "@httpclient/ApiConfig";
-import {ApiSpec} from "@apiSpec/ApiSpec";
-import {request} from "@httpclient/request";
-import {specParser} from "@parser/specParser";
+import {ApiConfig} from "../../src/httpclient/ApiConfig";
+import {ApiSpec} from "../../src/apiSpec/ApiSpec";
+import {request} from "../../src/httpclient/request";
+import {specParser} from "../../src/parser/specParser";
 
 describe('POST /user', async () => {
     const method = 'POST';

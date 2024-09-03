@@ -1,4 +1,5 @@
-import {specParser} from "@parser/specParser";
+// import {specParser} from "@parser/specParser";
+import {specParser} from "../../src/parser/specParser";
 
 describe('Parser PetStore Swagger', () => {
     it('should parse successfully', async function () {
